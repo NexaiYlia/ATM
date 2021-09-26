@@ -1,5 +1,7 @@
 package atm.model;
 
+import atm.model.model.BoundOfLimitException;
+
 import java.util.Date;
 import java.util.Scanner;
 import java.util.Set;
@@ -18,7 +20,7 @@ public class ATM extends PersonalCard {
         this.personalCards = personalCards;
     }
 
-    public void run() throws NotEnoughMoneyException, InterruptedException {
+    public void run() throws NotEnoughMoneyException, InterruptedException, BoundOfLimitException {
         for (int i = 0; i < 2; i++) {
 
             System.out.println("Здравствуйте! Пожалуйста, вставьте свою банковскую карту");
@@ -50,7 +52,7 @@ public class ATM extends PersonalCard {
         menu();
     }
 
-    public void menu() throws InterruptedException, NotEnoughMoneyException {
+    public void menu() throws InterruptedException, NotEnoughMoneyException, BoundOfLimitException {
         System.out.println("Авторизация прошла успешно. Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные");
         int userChoice = input.nextInt();
         switch (userChoice) {
@@ -59,13 +61,13 @@ public class ATM extends PersonalCard {
                 break;
             case 2:
                 System.out.println("Введите сумму для пополнения счета:");
-                int money1 = input.nextInt();
-                putMoney(money1);
+                 int money = input.nextInt();
+                putMoney(money);
                 break;
             case 3:
                 System.out.println("Введите сумму для выдачи наличными:");
-                int money2 = input.nextInt();
-                takeMoney(money2);
+                money = input.nextInt();
+                takeMoney(money);
                 break;
             default:
                 wait(10000);

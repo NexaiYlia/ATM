@@ -1,12 +1,13 @@
 package atm.model;
 
+import atm.model.model.BoundOfLimitException;
+
 public class PersonalCard {
     public int pinCode;
     public String cardNumber;
     public double balance;
+    int limitOfATM = 1000;
 
-    public PersonalCard() {
-    }
 
     public PersonalCard(int pinCode, String cardNumber) {
         this.pinCode = pinCode;
@@ -46,18 +47,25 @@ public class PersonalCard {
         return this;
     }
 
-    public int takeMoney(int money) throws NotEnoughMoneyException {
+    public int takeMoney(int money) throws NotEnoughMoneyException, BoundOfLimitException {
+
         if (money > balance)
             throw new NotEnoughMoneyException();
-        else {
+        else if (money > limitOfATM) {
+            throw new BoundOfLimitException();
+        } else {
             balance -= money;
             return money;
         }
     }
 
-    public int putMoney(int money) {
-        balance += money;
-        return money;
-    }
+    public int putMoney(int money) throws BoundOfLimitException {
+        if (money > limitOfATM) {
+            throw new BoundOfLimitException();
+        } else {
+            balance += money;
+            return money;
+        }
 
+    }
 }
