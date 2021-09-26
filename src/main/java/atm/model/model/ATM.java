@@ -1,8 +1,5 @@
-package atm.model;
+package atm.model.model;
 
-import atm.model.model.BoundOfLimitException;
-
-import java.util.Date;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -17,9 +14,10 @@ public class ATM extends PersonalCard {
     }
 
     public void setCashCards(Set<PersonalCard> cashCards) {
+        this.personalCards = personalCards;
     }
 
-    public void run() throws NotEnoughMoneyException, InterruptedException, BoundOfLimitException {
+    public void run() throws BoundOfLimitException, InterruptedException {
         for (int i = 0; i < 2; i++) {
 
             System.out.println("Здравствуйте! Пожалуйста, вставьте свою банковскую карту");
@@ -29,11 +27,11 @@ public class ATM extends PersonalCard {
 
             PersonalCard cardToCheck = new PersonalCard(inputCard, inputPwd, balance);
             Boolean result = false;
-            if (cardToCheck.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 6556)) {
+            if (cardNumber.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 6556)) {
                 result = true;
-            } else if (cardToCheck.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 7777)) {
+            } else if (cardNumber.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 7777)) {
                 result = true;
-            } else if (cardToCheck.equals("8957 - 1101 - 4444 - 5745") && (pinCode == 1221)) {
+            } else if (cardNumber.equals("8957 - 1101 - 4444 - 5745") && (pinCode == 1221)) {
                 result = true;
             }
 
@@ -51,7 +49,7 @@ public class ATM extends PersonalCard {
         menu();
     }
 
-    public void menu() throws InterruptedException, NotEnoughMoneyException, BoundOfLimitException {
+    public void menu() throws InterruptedException, BoundOfLimitException {
         System.out.println("Авторизация прошла успешно. Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные");
         int userChoice = input.nextInt();
         switch (userChoice) {
@@ -60,13 +58,13 @@ public class ATM extends PersonalCard {
                 break;
             case 2:
                 System.out.println("Введите сумму для пополнения счета:");
-                 int money = input.nextInt();
-                putMoney(money);
+                int money1 = input.nextInt();
+                putMoney(money1);
                 break;
             case 3:
                 System.out.println("Введите сумму для выдачи наличными:");
-                money = input.nextInt();
-                takeMoney(money);
+                int money2 = input.nextInt();
+                takeMoney(money2);
                 break;
             default:
                 wait(10000);

@@ -1,13 +1,12 @@
-package atm.model;
-
-import atm.model.model.BoundOfLimitException;
+package atm.model.model;
 
 public class PersonalCard {
     public int pinCode;
     public String cardNumber;
     public double balance;
-    int limitOfATM = 1000;
 
+    public PersonalCard() {
+    }
 
     public PersonalCard(int pinCode, String cardNumber) {
         this.pinCode = pinCode;
@@ -20,29 +19,9 @@ public class PersonalCard {
         this.balance = balance;
     }
 
-
-    public PersonalCard(String cardNumber, int pinCode) {
-        this(cardNumber, pinCode, 0);
-    }
-
-    public PersonalCard() {
-
-    }
-
     public int getPinCode() {
         return pinCode;
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || o.getClass() != this.getClass())
-            return false;
-        if (o == this)
-            return true;
-        PersonalCard that = (PersonalCard) o;
-        return this.cardNumber.equals(that.cardNumber) && this.pinCode == that.pinCode;
-    }
-
 
     public PersonalCard setPinCode(int pinCode) {
         this.pinCode = pinCode;
@@ -67,24 +46,20 @@ public class PersonalCard {
         return this;
     }
 
-    public int takeMoney(int money) throws NotEnoughMoneyException, BoundOfLimitException {
-
-        if (money > balance)
-            throw new NotEnoughMoneyException();
-        else if (money > limitOfATM) {
+    public int takeMoney(int money) throws BoundOfLimitException {
+        int limitOfATM = 1000;
+        if (money > balance )
             throw new BoundOfLimitException();
-        } else {
+        else if (money > limitOfATM )
+            throw new BoundOfLimitException();{
             balance -= money;
             return money;
         }
     }
 
-    public int putMoney(int money) throws BoundOfLimitException {
-        if (money > limitOfATM) {
-            throw new BoundOfLimitException();
-        } else {
-            balance += money;
-            return money;
-        }
+    public int putMoney(int money) {
+        balance += money;
+        return money;
     }
+
 }
