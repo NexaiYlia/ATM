@@ -8,9 +8,15 @@ public class PersonalCard {
     public PersonalCard() {
     }
 
-    public PersonalCard(String cardNumber, int pinCode) {
+    public PersonalCard(int pinCode, String cardNumber) {
         this.pinCode = pinCode;
         this.cardNumber = cardNumber;
+    }
+
+    public PersonalCard(String cardNumber, int pinCode, double balance) {
+        this.pinCode = pinCode;
+        this.cardNumber = cardNumber;
+        this.balance = balance;
     }
 
     public int getPinCode() {
