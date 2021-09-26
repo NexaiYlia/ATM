@@ -7,7 +7,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 public class ATM extends PersonalCard {
-
+    public static final String FORMAT_OF_CARD_NUMBER = "([0-9]{4}\\-){3}[0-9]{4}";
 
     Scanner input = new Scanner(System.in);
     private Set<PersonalCard> personalCards;
@@ -20,36 +20,45 @@ public class ATM extends PersonalCard {
     }
 
     public void run() throws NotEnoughMoneyException, InterruptedException, BoundOfLimitException {
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i <= 2; i++) {
 
             System.out.println("Здравствуйте! Пожалуйста, вставьте свою банковскую карту");
             String inputCard = input.nextLine();
+
             System.out.println("Введите пароль:");
             int inputPwd = input.nextInt();
 
             PersonalCard cardToCheck = new PersonalCard(inputCard, inputPwd, balance);
             Boolean result = false;
-            if (cardToCheck.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 6556)) {
+            if (inputCard.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 6556)) {
                 result = true;
-            } else if (cardToCheck.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 7777)) {
+            } else if (inputCard.equals("8957 - 2546 - 2465 - 5745") && (pinCode == 7777)) {
                 result = true;
-            } else if (cardToCheck.equals("8957 - 1101 - 4444 - 5745") && (pinCode == 1221)) {
+            } else if (inputCard.equals("8957 - 1101 - 4444 - 5745") && (pinCode == 1221)) {
                 result = true;
             }
 
-            if (result == false) {
-                System.out.println("Неправильно введен номер карты или пинкод! Попробуйте еще раз!");
-                continue;
-            } else if (i == 2) {
+            if (checkCardNumber(inputCard)&&result) {
+                menu();
+
+            } else if ( i==2) {
                 System.out.println("Данные введены неверно! Карта заблокирована!");
                 return;
+            } else {
+                 continue;
 
             }
-
-
         }
-        menu();
     }
+    public  boolean checkCardNumber(String number) {
+        if (((number.length() == 19)&&number.matches(FORMAT_OF_CARD_NUMBER))) {
+            return true;
+        } else {
+            System.out.println("Номер карты введен неверно");
+            return false;
+        }
+    }
+
 
     public void menu() throws InterruptedException, NotEnoughMoneyException, BoundOfLimitException {
         System.out.println("Авторизация прошла успешно. Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные");
@@ -60,7 +69,7 @@ public class ATM extends PersonalCard {
                 break;
             case 2:
                 System.out.println("Введите сумму для пополнения счета:");
-                 int money = input.nextInt();
+                int money = input.nextInt();
                 putMoney(money);
                 break;
             case 3:
