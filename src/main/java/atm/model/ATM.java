@@ -38,20 +38,21 @@ public class ATM extends PersonalCard {
                 result = true;
             }
 
-            if (checkCardNumber(inputCard)&&result) {
+            if (checkCardNumber(inputCard) && result) {
                 menu();
 
-            } else if ( i==2) {
+            } else if (i == 2) {
                 System.out.println("Данные введены неверно! Карта заблокирована!");
                 return;
             } else {
-                 continue;
+                continue;
 
             }
         }
     }
-    public  boolean checkCardNumber(String number) {
-        if (((number.length() == 19)&&number.matches(FORMAT_OF_CARD_NUMBER))) {
+
+    public boolean checkCardNumber(String number) {
+        if (((number.length() == 19) && number.matches(FORMAT_OF_CARD_NUMBER))) {
             return true;
         } else {
             System.out.println("Номер карты введен неверно");
@@ -61,25 +62,33 @@ public class ATM extends PersonalCard {
 
 
     public void menu() throws InterruptedException, NotEnoughMoneyException, BoundOfLimitException {
-        System.out.println("Авторизация прошла успешно. Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные");
-        int userChoice = input.nextInt();
-        switch (userChoice) {
-            case 1:
-                System.out.println("Баланс лицевого счета составляет:" + getBalance());
-                break;
-            case 2:
-                System.out.println("Введите сумму для пополнения счета:");
-                int money = input.nextInt();
-                putMoney(money);
-                break;
-            case 3:
-                System.out.println("Введите сумму для выдачи наличными:");
-                money = input.nextInt();
-                takeMoney(money);
-                break;
-            default:
-                wait(10000);
-                System.out.println("Время сессии закончилось. Заберите карту!");
-        }
+        boolean status = false;
+        do {
+            System.out.println("Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные\n4.Закончить работу");
+            int userChoice = input.nextInt();
+            switch (userChoice) {
+                case 1:
+                    status = true;
+                    System.out.println("Баланс лицевого счета составляет:" + getBalance());
+                    break;
+                case 2:
+                    status = true;
+                    System.out.println("Введите сумму для пополнения счета:");
+                    int money = input.nextInt();
+                    putMoney(money);
+                    break;
+                case 3:
+                    status = true;
+                    System.out.println("Введите сумму для выдачи наличными:");
+                    money = input.nextInt();
+                    takeMoney(money);
+                    break;
+                default:
+                    status = false;
+                    wait(10000);
+                    System.out.println("Время сессии закончилось. Заберите карту!");
+                    return;
+            }
+        } while (status);
     }
 }
