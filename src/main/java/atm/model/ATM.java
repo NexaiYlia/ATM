@@ -64,8 +64,9 @@ public class ATM extends PersonalCard {
     public void menu() throws InterruptedException, NotEnoughMoneyException, BoundOfLimitException {
         boolean status = false;
         do {
-            System.out.println("Выберите операцию:\n1.Проверить баланс;\n2.Пополнить баланс.\n3.Снять наличные\n4.Закончить работу");
+            System.out.println("Авторизация прошла успешно.\n1.Проверить баланс;\n2.Пополнить баланс;\n3.Снять наличные;\n4.Закончить работу.\nВыберите операцию:");
             int userChoice = input.nextInt();
+
             switch (userChoice) {
                 case 1:
                     status = true;
@@ -76,17 +77,21 @@ public class ATM extends PersonalCard {
                     System.out.println("Введите сумму для пополнения счета:");
                     int money = input.nextInt();
                     putMoney(money);
+                    System.out.println("Операция выполнена успешно.Баланс лицевого счета равен " + balance);
                     break;
                 case 3:
                     status = true;
                     System.out.println("Введите сумму для выдачи наличными:");
                     money = input.nextInt();
                     takeMoney(money);
+                    System.out.println("Операция выполнена успешно.Баланс лицевого счета равен " + balance);
                     break;
+                case 4:
+                    return;
+
                 default:
                     status = false;
-                    wait(10000);
-                    System.out.println("Время сессии закончилось. Заберите карту!");
+                    System.out.println("Операция введена некорректно");
                     return;
             }
         } while (status);

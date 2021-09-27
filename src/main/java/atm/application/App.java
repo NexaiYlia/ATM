@@ -23,7 +23,7 @@ public class App {
         personalCards.add(personalCard3);
 
 
-       new ATM(personalCards).run();
+       new ATM(personalCards).menu();
 
     }
 }

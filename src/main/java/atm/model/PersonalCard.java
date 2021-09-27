@@ -76,6 +76,7 @@ public class PersonalCard {
         } else {
             balance -= money;
             return money;
+
         }
     }
 
